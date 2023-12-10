@@ -31,4 +31,3 @@ class DataPersistenceManager:
                 for res in resources]
         with open(file_path, 'w') as file: # Opens the specified file for writing and save the JSON data
             json.dump(data, file, indent=2) # Saves the data to the file in JSON format with an indentation of 2 spaces
-
