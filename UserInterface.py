@@ -41,11 +41,11 @@ class UI:
                 print(f"An error occurred: {e}")
 
     def create_resource(self):
-        id = input("Enter ID for the resource: ")  # Allow the user to manually input the resource ID
-        key_attribute = input("Enter Key Attribute: ")
-        non_key_attribute = input("Enter Non-Key Attribute: ")
+        id = input("Enter ID for the Set: ")
+        set_Designer = input("Enter Designer: ")
+        set_Name = input("Enter Set Name: ")
 
-        resource = Resource(id, key_attribute, non_key_attribute)
+        resource = Resource(id, set_Designer, set_Name)
         self.resource_manager.create_resource(resource)
         print("Resource created successfully.")
 
@@ -67,22 +67,21 @@ class UI:
 
     def edit_resource(self):
         resource_id = input("Enter the ID of the resource to edit: ")
-        new_non_key_attribute = input("Enter the new Non-Key Attribute: ")
+        new_set_Name = input("Enter the new Name: ")
 
-        # Convert resource_id to string before comparing
         resource_id = str(resource_id)
 
         found = False
         for res in self.resource_manager.resources:
             if res.id == resource_id:
-                self.resource_manager.update_resource(resource_id, new_non_key_attribute)
+                res.set_Name = new_set_Name
                 found = True
                 print("Resource updated successfully.")
                 break
 
         if not found:
             print("Resource not found.")
-
+            
     def delete_resource(self):
         resource_id = int(input("Enter the ID of the resource to delete: "))
         self.resource_manager.delete_resource(resource_id)
