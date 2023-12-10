@@ -1,6 +1,6 @@
 from Resource import Resource
 from ResourceManager import ResourceManager
-from ResourceManager import DataPersistenceManager
+from Application import DataPersistenceManager
 
 class UI:
     def __init__(self):
@@ -41,23 +41,23 @@ class UI:
                 print(f"An error occurred: {e}")
 
     def create_resource(self):
-        id = len(self.resource_manager.resources) + 1
-        set_link = input("Enter Key Attribute: ")
-        set_name = input("Enter Non-Key Attribute: ")
+        id = input("Enter ID for the resource: ")  # Allow the user to manually input the resource ID
+        key_attribute = input("Enter Key Attribute: ")
+        non_key_attribute = input("Enter Non-Key Attribute: ")
 
-        resource = Resource(id, set_link, set_name)
+        resource = Resource(id, key_attribute, non_key_attribute)
         self.resource_manager.create_resource(resource)
         print("Resource created successfully.")
 
     def search_resource(self):
-        set_link = input("Enter Key Attribute to search: ")
-        set_name = input("Enter Non-Key Attribute to search: ")
+        key_attribute = input("Enter Key Attribute to search: ")
+        non_key_attribute = input("Enter Non-Key Attribute to search: ")
 
         found_resources = []
-        if set_link:
-            found_resources.extend(self.resource_manager.find_resource_by_key_attribute(set_link))
-        if set_name:
-            found_resources.extend(self.resource_manager.find_resource_by_non_key_attribute(set_name))
+        if key_attribute:
+            found_resources.extend(self.resource_manager.find_resource_by_key_attribute(key_attribute))
+        if non_key_attribute:
+            found_resources.extend(self.resource_manager.find_resource_by_non_key_attribute(non_key_attribute))
 
         if found_resources:
             for res in found_resources:
@@ -66,11 +66,22 @@ class UI:
             print("No matching resources found.")
 
     def edit_resource(self):
-        resource_id = int(input("Enter the ID of the resource to edit: "))
-        new_set_name = input("Enter the new desired set name: ")
+        resource_id = input("Enter the ID of the resource to edit: ")
+        new_non_key_attribute = input("Enter the new Non-Key Attribute: ")
 
-        self.resource_manager.update_resource(resource_id, new_set_name)
-        print("Resource updated successfully.")
+        # Convert resource_id to string before comparing
+        resource_id = str(resource_id)
+
+        found = False
+        for res in self.resource_manager.resources:
+            if res.id == resource_id:
+                self.resource_manager.update_resource(resource_id, new_non_key_attribute)
+                found = True
+                print("Resource updated successfully.")
+                break
+
+        if not found:
+            print("Resource not found.")
 
     def delete_resource(self):
         resource_id = int(input("Enter the ID of the resource to delete: "))
