@@ -50,14 +50,14 @@ class UI:
         print("Resource created successfully.")
 
     def search_resource(self):
-        key_attribute = input("Enter Key Attribute to search: ")
-        non_key_attribute = input("Enter Non-Key Attribute to search: ")
+        set_Designer = input("Enter Key Attribute to search: ")
+        set_Name = input("Enter Non-Key Attribute to search: ")
 
         found_resources = []
-        if key_attribute:
-            found_resources.extend(self.resource_manager.find_resource_by_key_attribute(key_attribute))
-        if non_key_attribute:
-            found_resources.extend(self.resource_manager.find_resource_by_non_key_attribute(non_key_attribute))
+        if set_Designer:
+            found_resources.extend(self.resource_manager.find_resource_by_key_attribute(set_Designer))
+        if set_Name:
+            found_resources.extend(self.resource_manager.find_resource_by_non_key_attribute(set_Name))
 
         if found_resources:
             for res in found_resources:
