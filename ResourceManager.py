@@ -19,4 +19,4 @@ class ResourceManager:
                 break
 
     def delete_resource(self, resource_id):
-        self.resources = [res for res in self.resources if res.id != resource_id]
+        self.resources = [res for res in self.resources if str(res.id) != str(resource_id)]

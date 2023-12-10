@@ -83,8 +83,8 @@ class UI:
             print("Resource not found.")
             
     def delete_resource(self):
-        resource_id = int(input("Enter the ID of the resource to delete: "))
-        self.resource_manager.delete_resource(resource_id)
+        resource_id = input("Enter the ID of the resource to delete: ")
+        self.resource_manager.delete_resource(str(resource_id))
         print("Resource deleted successfully.")
 
 if __name__ == "__main__":
