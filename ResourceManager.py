@@ -6,42 +6,41 @@ class ResourceManager:
     def __init__(self):
         self.resources = []
 
+    def create_resource(self, resource):
+        self.resources.append(resource)
 
-    def create_resource(self, id, attribute1, attribute2): # Creates a new resource object
-        resource = Resource(id, attribute1, attribute2)
-        return resource
-    
+    def find_resource_by_key_attribute(self, key_attribute):
+        return [res for res in self.resources if res.key_attribute == key_attribute]
 
-    def search_resources(self, key_attribute, non_key_attribute): # Search for resources based on key and non-key attributes
-        found_resources = []
-        for resource in self.resources:
-            if getattr(resource, key_attribute, None) == non_key_attribute:
-                found_resources.append(resource)
-        return found_resources
+    def find_resource_by_non_key_attribute(self, non_key_attribute):
+        return [res for res in self.resources if res.non_key_attribute == non_key_attribute]
 
-    def update_resource(self, resource_id, new_attribute1, new_attribute2):# Update the attributes of a resource
+    def update_resource(self, resource_id, new_non_key_attribute):
+        for res in self.resources:
+            if res.id == resource_id:
+                res.non_key_attribute = new_non_key_attribute
+                break
 
-        for resource in self.resources:
-            if resource.id == resource_id:
-                resource.attribute1 = new_attribute1
-                resource.attribute2 = new_attribute2
-
-    def delete_resource(self, resource_id): # Delete a resource based on its ID
-        self.resources = [resource for resource in self.resources if resource.id != resource_id]
+    def delete_resource(self, resource_id):
+        self.resources = [res for res in self.resources if res.id != resource_id]
 
 # Data Persistence
 
-class DataPersistence:
-    def load_data(self, filename): # Load data from a file (JSON or CSV)
+import json
+
+class DataPersistenceManager:
+    @staticmethod
+    def load_data(file_path):
         try:
-            with open(filename, 'r') as file:
+            with open(file_path, 'r') as file:
                 data = json.load(file)
                 return [Resource(**item) for item in data]
-        except (FileNotFoundError, json.JSONDecodeError):
-            return []        
+        except (json.JSONDecodeError, FileNotFoundError):
+            return []
 
-    def save_data(self, filename, data): # Save data to a file (JSON or CSV)
-        with open(filename, 'w') as file:
-            serialized_data = [{'id': resource.id, 'attribute1': resource.attribute1, 'attribute2': resource.attribute2}
-                               for resource in data]
-            json.dump(serialized_data, file, indent=2)
+    @staticmethod
+    def save_data(file_path, resources):
+        data = [{'id': res.id, 'key_attribute': res.key_attribute, 'non_key_attribute': res.non_key_attribute}
+                for res in resources]
+        with open(file_path, 'w') as file:
+            json.dump(data, file)

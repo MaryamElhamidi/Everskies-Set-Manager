@@ -1,27 +1,82 @@
-class UserInterface:
-    def display_menu(self):
-        print("1. Create\n2. Read (Search)\n3. Edit\n4. Delete\n5. Exit") # Display menu options
-        
+from Resource import Resource
+from ResourceManager import ResourceManager
+from ResourceManager import DataPersistenceManager
 
-    def get_user_choice(self):
-        return int(input("Enter your choice: ")) # Get user input for menu choice
+class UI:
+    def __init__(self):
+        self.resource_manager = ResourceManager()
+        self.data_persistence_manager = DataPersistenceManager()
 
-    def get_resource_input(self):
-        id = int(input("Enter ID: ")) # Gets user input for their iD
-        attribute1 = input("Enter Attribute 1: ") # Get user input for resource attributes
-        attribute2 = input("Enter Attribute 2: ")
-        return id, attribute1, attribute2 
+    def menu(self):
+        print("1. Create")
+        print("2. Read (Search)")
+        print("3. Edit")
+        print("4. Delete")
+        print("0. Exit")
 
-    def display_resources(self, resources):
-        if resources: # Display list of resources
-            for resource in resources:
-                print(resource)
+    def run(self):
+        file_path = 'data.json'
+        self.resource_manager.resources = self.data_persistence_manager.load_data(file_path)
+
+        while True:
+            try:
+                self.menu()
+                choice = int(input("Enter your choice: "))
+
+                if choice == 1:
+                    self.create_resource()
+                elif choice == 2:
+                    self.search_resource()
+                elif choice == 3:
+                    self.edit_resource()
+                elif choice == 4:
+                    self.delete_resource()
+                elif choice == 0:
+                    self.data_persistence_manager.save_data(file_path, self.resource_manager.resources)
+                    break
+                else:
+                    print("Invalid choice. Please try again.")
+
+            except Exception as e:
+                print(f"An error occurred: {e}")
+
+    def create_resource(self):
+        id = len(self.resource_manager.resources) + 1
+        key_attribute = input("Enter Key Attribute: ")
+        non_key_attribute = input("Enter Non-Key Attribute: ")
+
+        resource = Resource(id, key_attribute, non_key_attribute)
+        self.resource_manager.create_resource(resource)
+        print("Resource created successfully.")
+
+    def search_resource(self):
+        key_attribute = input("Enter Key Attribute to search: ")
+        non_key_attribute = input("Enter Non-Key Attribute to search: ")
+
+        found_resources = []
+        if key_attribute:
+            found_resources.extend(self.resource_manager.find_resource_by_key_attribute(key_attribute))
+        if non_key_attribute:
+            found_resources.extend(self.resource_manager.find_resource_by_non_key_attribute(non_key_attribute))
+
+        if found_resources:
+            for res in found_resources:
+                print(res)
         else:
             print("No matching resources found.")
 
-    def get_search_criteria(self):
-        resource_id = int(input("Enter resource ID: ")) # Get user input for search criteria
-        return resource_id
+    def edit_resource(self):
+        resource_id = int(input("Enter the ID of the resource to edit: "))
+        new_non_key_attribute = input("Enter the new Non-Key Attribute: ")
 
-    def display_error(self, message):
-        print(f"Error: {message}") # Display error messages
+        self.resource_manager.update_resource(resource_id, new_non_key_attribute)
+        print("Resource updated successfully.")
+
+    def delete_resource(self):
+        resource_id = int(input("Enter the ID of the resource to delete: "))
+        self.resource_manager.delete_resource(resource_id)
+        print("Resource deleted successfully.")
+
+if __name__ == "__main__":
+    ui = UI()
+    ui.run()

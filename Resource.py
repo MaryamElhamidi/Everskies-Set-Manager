@@ -1,8 +1,9 @@
 class Resource:
-    def __init__(self, id, attribute1, attribute2):
+    def __init__(self, id, key_attribute, non_key_attribute):
         self.id = id
-        self.attribute1 = attribute1
-        self.attribute2 = attribute2
+        self.key_attribute = key_attribute
+        self.non_key_attribute = non_key_attribute
 
     def __str__(self):
-        return f"{self.id}: {self.attribute1}, {self.attribute2}"
+        return f"ID: {self.id}, Key Attribute: {self.key_attribute}, Non-Key Attribute: {self.non_key_attribute}"
+
