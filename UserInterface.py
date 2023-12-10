@@ -113,3 +113,6 @@ if __name__ == "__main__": # Check if the script is being run as the main progra
     print('Everskies.com is a dress up site with a major focus on creativity. \nThrough this program you will have the opportunity to create a set, and acess it which users will have access to.\nPlease follow the menu instructions.')
     print('Before you continue, please note that Everskies has case sensitive set rules.')
     ui.run()
+
+
+#Testing my commits
