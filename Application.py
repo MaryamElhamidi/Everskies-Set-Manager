@@ -22,8 +22,8 @@ def main():
             resource = resource_manager.create_resource(*attributes)
             resource_manager.resources.append(resource)
         elif choice == 2:
-            set_link, non_key_attribute = ui.get_search_criteria()
-            found_resources = resource_manager.search_resources(set_link, non_key_attribute)
+            set_link, set_name = ui.get_search_criteria()
+            found_resources = resource_manager.search_resources(set_link, set_name)
             ui.display_resources(found_resources)
         elif choice == 3:
             resource_id = ui.get_search_criteria()[0]

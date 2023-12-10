@@ -43,21 +43,21 @@ class UI:
     def create_resource(self):
         id = len(self.resource_manager.resources) + 1
         set_link = input("Enter Key Attribute: ")
-        non_key_attribute = input("Enter Non-Key Attribute: ")
+        set_name = input("Enter Non-Key Attribute: ")
 
-        resource = Resource(id, set_link, non_key_attribute)
+        resource = Resource(id, set_link, set_name)
         self.resource_manager.create_resource(resource)
         print("Resource created successfully.")
 
     def search_resource(self):
         set_link = input("Enter Key Attribute to search: ")
-        non_key_attribute = input("Enter Non-Key Attribute to search: ")
+        set_name = input("Enter Non-Key Attribute to search: ")
 
         found_resources = []
         if set_link:
             found_resources.extend(self.resource_manager.find_resource_by_key_attribute(set_link))
-        if non_key_attribute:
-            found_resources.extend(self.resource_manager.find_resource_by_non_key_attribute(non_key_attribute))
+        if set_name:
+            found_resources.extend(self.resource_manager.find_resource_by_non_key_attribute(set_name))
 
         if found_resources:
             for res in found_resources:
@@ -67,9 +67,9 @@ class UI:
 
     def edit_resource(self):
         resource_id = int(input("Enter the ID of the resource to edit: "))
-        new_non_key_attribute = input("Enter the new Non-Key Attribute: ")
+        new_set_name = input("Enter the new desired set name: ")
 
-        self.resource_manager.update_resource(resource_id, new_non_key_attribute)
+        self.resource_manager.update_resource(resource_id, new_set_name)
         print("Resource updated successfully.")
 
     def delete_resource(self):
