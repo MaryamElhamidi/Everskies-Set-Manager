@@ -11,8 +11,6 @@ class UI:
     def menu(self): # Method to display the menu options
         print('┌── ⋆⋅☆⋅⋆ ──┐')
         print('✰ Welcome to Everskies Set Creation Centre ✰')
-        print('Everskies.com is a dress up site with a major focus on creativity. \nThrough this program you will have the opportunity to create a set, and acess it which users will have access to.\nPlease follow the menu instructions.')
-        print('Before you continue, please note that Everskies has case sensitive set rules.')
         print('└── ⋆⋅☆⋅⋆ ──┘')
 
         print("1. Create")
@@ -87,7 +85,7 @@ class UI:
             print(f"An error occurred: {e}")
 
     def edit_resource(self): # Method for editing an existing resource
-        resource_id = input("Enter the ID of the resource to edit: ")  # Prompt the user to enter the ID of the resource to edit
+        resource_id = input("Enter the ID of the set to edit: ")  # Prompt the user to enter the ID of the resource to edit
         new_set_Name = input("Enter the new Name: ") # Prompt the user to enter the new value for the Set Name
 
         resource_id = str(resource_id)  # Convert the resource_id to a string
@@ -97,7 +95,7 @@ class UI:
             if res.id == resource_id:  # Check if the current resource has the specified ID
                 res.set_Name = new_set_Name  # Update the Set Name of the found resource with the new value
                 found = True # Set found to True to indicate that the resource has been found and updated
-                print("Resource updated successfully.") # Display a success message indicating that the resource has been updated
+                print("Set updated successfully.") # Display a success message indicating that the resource has been updated
                 break # Exit the loop once the resource is found and updated
 
         if not found: # Check if the resource was not found
@@ -112,4 +110,6 @@ class UI:
             print(f"Error deleting set: {str(e)}")
 if __name__ == "__main__": # Check if the script is being run as the main program (not imported as a module)
     ui = UI() # Creates an instance of the UI class and runs the UI
+    print('Everskies.com is a dress up site with a major focus on creativity. \nThrough this program you will have the opportunity to create a set, and acess it which users will have access to.\nPlease follow the menu instructions.')
+    print('Before you continue, please note that Everskies has case sensitive set rules.')
     ui.run()
