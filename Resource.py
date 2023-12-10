@@ -5,5 +5,5 @@ class Resource:
         self.set_name = set_name #Non-Key attribute
 
     def __str__(self):
-        return f"ID: {self.id}, Key Attribute: {self.set_link}, Non-Key Attribute: {self.set_name}"
+        return f"ID: {self.id}, Set ID: {self.set_link}, Set Name: {self.set_name}"
 
