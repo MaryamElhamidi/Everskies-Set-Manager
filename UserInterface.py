@@ -47,13 +47,8 @@ class UI:
                 print(f"An error occurred: {e}")
 
     def create_resource(self):  #Method for creating a new resource
-        while True:
-            try:
-                id = int(input("Enter the set ID: ")) #Prompts the user to enter the set ID
-                break
-            except ValueError: # Handle the case where the input is not an integer
-                print("Invalid input. Please enter an integer for your set ID.") #Prints the error.
 
+        id = input("Enter the set ID: ") #Prompts the user to enter the set ID
         set_Designer = input("Enter Designer Name: ") #Prompts the user to enter the  designer name
         set_Name = input("Enter Set Name: ") #Prompts the user to enter the set name
 
@@ -79,8 +74,6 @@ class UI:
             if found_resources:
                 for res in found_resources:
                     print(res)
-        except ValueError:
-            print("No matching resources found. Please check your capitlization and spelling or create a new set.")
         except Exception as e:
             print(f"An error occurred: {e}")
 
@@ -109,9 +102,11 @@ class UI:
         except Exception as e:
             print(f"Error deleting set: {str(e)}")
 if __name__ == "__main__": # Check if the script is being run as the main program (not imported as a module)
-    ui = UI() # Creates an instance of the UI class and runs the UI
+    
     print('Everskies.com is a dress up site with a major focus on creativity. \nThrough this program you will have the opportunity to create a set, and acess it which users will have access to.\nPlease follow the menu instructions.')
     print('Before you continue, please note that Everskies has case sensitive set rules.')
+    
+    ui = UI() # Creates an instance of the UI class and runs the UI
     ui.run()
 
 
