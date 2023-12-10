@@ -40,6 +40,7 @@ class UI:
                     self.delete_resource()
                 elif choice == 0: # User chooses to exit, save the data, and break out of the loop
                     self.data_persistence_manager.save_data(file_path, self.resource_manager.resources)
+                    print('✰You have successfully exited the creation centre! See you soon.✰')
                     break
                 else: # Displays an error message for an invalid choice
                     print("Invalid choice. Please try again.") 
@@ -48,7 +49,13 @@ class UI:
                 print(f"An error occurred: {e}")
 
     def create_resource(self):  #Method for creating a new resource
-        id = input("Enter the set ID: ") #Prompts the user to enter the set ID
+        while True:
+            try:
+                id = int(input("Enter the set ID: ")) #Prompts the user to enter the set ID
+                break
+            except ValueError: # Handle the case where the input is not an integer
+                print("Invalid input. Please enter an integer for your set ID.") #Prints the error.
+
         set_Designer = input("Enter Designer Name: ") #Prompts the user to enter the  designer name
         set_Name = input("Enter Set Name: ") #Prompts the user to enter the set name
 
@@ -69,18 +76,22 @@ class UI:
         
         
         # Displays the found resources or a message if none are found
-        if found_resources:
-            for res in found_resources:
-                print(res)
-        else:
+        
+        try:
+            if found_resources:
+                for res in found_resources:
+                    print(res)
+        except ValueError:
             print("No matching resources found. Please check your capitlization and spelling or create a new set.")
+        except Exception as e:
+            print(f"An error occurred: {e}")
 
     def edit_resource(self): # Method for editing an existing resource
         resource_id = input("Enter the ID of the resource to edit: ")  # Prompt the user to enter the ID of the resource to edit
         new_set_Name = input("Enter the new Name: ") # Prompt the user to enter the new value for the Set Name
 
         resource_id = str(resource_id)  # Convert the resource_id to a string
-
+        
         found = False  # Initialize a variable to track if the resource is found
         for res in self.resource_manager.resources: # Iterate through the resources to find the one with the specified ID
             if res.id == resource_id:  # Check if the current resource has the specified ID
@@ -93,10 +104,12 @@ class UI:
             print("Resource not found.") # Display a message indicating that the resource was not found
             
     def delete_resource(self):     # Method for deleting an existing resource
-        resource_id = input("Enter the ID of the resource to delete: ") # Prompt the user to enter the ID of the resource to delete
-        self.resource_manager.delete_resource(str(resource_id)) # Call the delete_resource method of the resource_manager to delete the resource by ID
-        print("Resource deleted successfully.") # Display a success message indicating that the resource has been deleted
-
+        resource_id = input("Enter the ID of the set to delete: ") # Prompt the user to enter the ID of the resource to delete
+        try:
+            self.resource_manager.delete_resource(str(resource_id)) # Call the delete_resource method of the resource_manager to delete the resource by ID
+            print("Resource deleted successfully.") # Display a success message indicating that the resource has been deleted
+        except Exception as e:
+            print(f"Error deleting set: {str(e)}")
 if __name__ == "__main__": # Check if the script is being run as the main program (not imported as a module)
     ui = UI() # Creates an instance of the UI class and runs the UI
     ui.run()
