@@ -9,8 +9,8 @@ class ResourceManager:
     def create_resource(self, resource):
         self.resources.append(resource)
 
-    def find_resource_by_key_attribute(self, key_attribute):
-        return [res for res in self.resources if res.key_attribute == key_attribute]
+    def find_resource_by_key_attribute(self, set_link):
+        return [res for res in self.resources if res.set_link == set_link]
 
     def find_resource_by_non_key_attribute(self, non_key_attribute):
         return [res for res in self.resources if res.non_key_attribute == non_key_attribute]
@@ -40,7 +40,7 @@ class DataPersistenceManager:
 
     @staticmethod
     def save_data(file_path, resources):
-        data = [{'id': res.id, 'key_attribute': res.key_attribute, 'non_key_attribute': res.non_key_attribute}
+        data = [{'id': res.id, 'key_attribute': res.set_link, 'non_key_attribute': res.non_key_attribute}
                 for res in resources]
         with open(file_path, 'w') as file:
             json.dump(data, file)

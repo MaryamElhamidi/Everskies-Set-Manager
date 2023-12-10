@@ -42,20 +42,20 @@ class UI:
 
     def create_resource(self):
         id = len(self.resource_manager.resources) + 1
-        key_attribute = input("Enter Key Attribute: ")
+        set_link = input("Enter Key Attribute: ")
         non_key_attribute = input("Enter Non-Key Attribute: ")
 
-        resource = Resource(id, key_attribute, non_key_attribute)
+        resource = Resource(id, set_link, non_key_attribute)
         self.resource_manager.create_resource(resource)
         print("Resource created successfully.")
 
     def search_resource(self):
-        key_attribute = input("Enter Key Attribute to search: ")
+        set_link = input("Enter Key Attribute to search: ")
         non_key_attribute = input("Enter Non-Key Attribute to search: ")
 
         found_resources = []
-        if key_attribute:
-            found_resources.extend(self.resource_manager.find_resource_by_key_attribute(key_attribute))
+        if set_link:
+            found_resources.extend(self.resource_manager.find_resource_by_key_attribute(set_link))
         if non_key_attribute:
             found_resources.extend(self.resource_manager.find_resource_by_non_key_attribute(non_key_attribute))
 
